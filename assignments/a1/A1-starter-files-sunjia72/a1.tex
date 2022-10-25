@@ -1,0 +1,128 @@
+\documentclass[fontsize=11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\title{CSC111 Assignment 1: Linked Lists}
+\author{Jack Sun, Nicholas Au}
+\date{\today}
+
+\documentclass[fontsize=11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\title{CSC111 Assignment 1: Linked Lists}
+\author{Jack Sun, Nicholas Au}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Part 1: Faster Searching in Linked Lists}
+
+\begin{enumerate}
+
+\item[1.]
+Complete this part in the provided \texttt{a1\_part1.py} starter file.
+Do \textbf{not} include your solution in this file.
+
+\item[2.]
+Complete this part in the provided \texttt{a1\_part1\_test.py} starter file.
+Do \textbf{not} include your solution in this file.
+
+\item[3.]
+\begin{enumerate}
+
+    \item[(a)]
+Running Time Analysis for LinkedList.\_\_contains\_\_.
+\\The loop (for \_ in range(0, m):) runs m times. Each iteration executes linky.\_\_contains\_\_(n - 1), Inside linky.\_\_contains\_\_(n - 1), curr = self.\_first takes 1 step, the while loop takes n-1 steps because element $n-1$ is at index $n-1$. the return statement takes 1 step. In total, n+1 steps. After each search, the index of element $n-1$ does not change. So each iteration does not depend on $\_$.
+\\ Overall, the total running time is $(n+1)m$, which is $\Theta(nm)$.$RT_{LinkedList.\_\_contains\_\_}=(n+1)\cdot m\in \Theta(nm)$
+
+    \item[(b)]
+    Running time analysis for MoveToFrontLinkedList.\_\_contains\_\_.
+    List: [0,1,...,n-1]
+    Consider the loop for \_ in range(0, m):
+    \\\_ == 0 case. The assignment step curr = self.\_first takes 1 step.
+    \\The while loop iterates until it reaches the element n-1, which has index n-1. It happens after n-1 iterations, since curr starts at 0 and increases by 1 each iteration. In the last iteration, the if branch executes, which moves element n-1 to index 0.
+    \\Each iteration takes 1 steps, for a total of n-1 steps.
+    \\The return statement takes 1 step.
+    \\The loop $\_=0$ takes n+1 steps
+    \\$1\leq \_ <m$ case. The assignment step curr = self.\_first takes 1 step.
+    \\Because element n-1 is at index 0, the if branch curr.item == item executes, takes 1 step. After each iteration, the index of element $n-1$ is 0, does not change.
+    In total, $RT_{MoveToFrontLinkedList.\_\_contains\_\_}=n+1+2\cdot(m-1)\in \Theta(n+m)$
+    \\Running time analysis for SwapLinkedList.\_\_contains\_\_.
+    List: [0,1,...,n-1]
+    Consider the loop for \_ in range(0, m):
+    \\Start from $\_==0$ The assignment statement takes 1 step. The element n-1 is at index n-1.
+    \\The while loop iterates until it reaches the element n-1 with index n-1. It happens after n-1 iterations, since curr starts at 0 and increases by 1 each iteration. After the last iteration, if $n > 2$, the else branch at line 115 executes which moves element n-1 to index n-2 and returns True. If n=2, the elif branch at line 110 executes which moves element n-1 to index 0 and returns True. If n=1, then the loop returns True. Whatever, each iteration takes 1 steps, for a total of n-1 steps.
+    \\The return statement takes 1 step. ($\_==0$ iteration has n+1 steps in total)
+    \\After each iteration of for loop, the index of element n-1 decreases by 1. At loop number $\_=i$, its index is $n-i-1$.After iteration $\_=n-1$, element n-1 moves to the front of list (index 0), so each iteration takes 2 steps. In total, if $m\leq n$, $RT_{SwapLinkedList.\_\_contains\_\_}\sum_{\_=0}^{m-1} n+1-\_=\frac{(n+1)+(n+1-(m-1))}{2}\cdot m=\frac{2n+3-m}{2}\cdot m =\Theta(m(n-m))$.
+    \\If $m>n$, then $RT_{SwapLinkedList.\_\_contains\_\_}=\sum_{\_=0}^{n-1} n+1-\_+2(m-n)=\frac{(n+1)+(n+1-(n-1))}{2}\cdot n+ 2(m-n)=\frac{n(n-1)}{2}+2m =\Theta(n^2+m)$.
+
+    Running time analysis for CountLinkedList.\_\_contains\_\_.
+    List: [0,1,...,n-1]. Initially, all elements have access\_count 0.
+    Consider the loop for \_ in range(0, m):
+    \\\_ == 0 case. The assignment step curr = self.\_first takes 1 step. The element n-1 is at index n-1.
+    \\The while loop iterates until it reaches the index of element n-1. It executes n-1 iterations, since curr starts at 0 and increases by 1 each iteration. Each includes constant time operation In total, the whole while loop takes n-1 steps.
+    \\After the last iteration, the else branch at line 281 executes, which adds access\_count of n-1 by 1. The while loop at line 288 does not execute because the access\_count of element n-1 is greater than access\_count of the first element. The element $n-1$ moves to index 0. True is returned. This block takes 1 step.
+    \\The \_ == 0 iteration has n+1 steps.
+    \\$1\leq \_ <m$ case. The assignment step curr = self.\_first takes 1 step.\\ Since the element n-1 moves to the front of list, the first while loops do not execute. Since the access account of n-1 is the greatest, the second while loop does not execute. The index of n-1 does not change. They are constant time. This block of code takes 1 step.
+    In total, $RT_{CountLinkedList.\_\_contains\_\_}=n+1+2\cdot(m-1)=n+m\in \Theta(n+m)$
+
+\end{enumerate}
+
+\item[4.]
+Assume the list is $[0,1,...,n-1]$. Assume $m>n^2$
+\\Strategy: If n is even, pick $n-2, n-4,..., 0$ (first half cycle), then pick $n-3, ...,1$ (second half cycle). and repeat the complete cycle. If $n$ is odd, pick $n-2, n-4, ...,1$(first half) $n-3,...,0$(second half), and repeat the complete cycle.
+\\n is even case:
+\\Running time analysis for SwapLinkedList:
+\\Search $n-2$. The SwapLinkedList (S list) takes $n-2$ steps and the S list becomes $[0,1,...,n-4,n-2,n-3,n-1]$.
+\\Search $n-4$. The S list takes $n-4$ steps and becomes $[0,1,...,n-6,n-4,n-5,n-2,n-3,n-1]$.
+\\Search of $n-2i$,where $1\neq i \neq \frac{n}{2}$ The S list takes $n-2i$ steps.
+\\At the final search of first half cycle, the S list takes 0 step, and becomes $[0,2,1,4,3,6,...,n-5,n-2,n-3,n-1]$. The first half takes $n-2+n-4+...+2+0=\frac{(n-2)n}{4}$ steps.
+\\For the second half, the S list takes $(n-2)+(n-4)+...+2=\frac{(n)(\frac{n}{2}-1)}{2}$. The S list becomes $[0,1,...,n-1]$ again.
+\\ Each complete cycle calls $\_\_contains\_\_$ n-1 times. $T_2(m)\leq \lceil\frac{m}{n-1}\rceil\frac{(n-2)n}{2}$,
+\\Running time analysis for MoveToFrontLinkedList:
+\\Search $n-2$. The MoveToFrontLinkedList (M list) takes $n-2$ steps and the M list becomes $[n-2,0,...,n-4,n-3,n-1]$.
+\\Search $n-4$. The S list takes $n-3$ steps and becomes $[n-4, n-2,0,...,n-6, n-5,n-3,n-1]$.
+\\Search of $n-2i$,where $1\leq i \leq \frac{n}{2}$ The The M list takes $n-i-1$.
+\\At the final search of first half cycle, the M list takes $\frac{n}{2}$ step, and becomes $[0,2,...,n-2,1,3,...,n-3,n-1]$. The first half takes $n-2+n-3+...+(\frac{n}{2}-1)=\frac{3(n-2)n}{8}$ steps.
+\\The first number in second half cycle takes n-2 steps for the M list. It is shifted to leftmost. Clearly, all the numbers in second half cycle takes n-2 steps. In total, the second half takes $(n-2)\cdot (\frac{n}{2}-1)=\frac{(n-2)^2}{2}$. After first complete cycle, it becomes [1,3,...,n-3,0,2,...,n-2,n-1].This new M list has a property that, in every new complete cycle, each element takes $n-2$ steps to search
+\\The first cycle:$\frac{3(n-2)n}{8}+\frac{(n-2)^2}{2}=\frac{(n-2)(7n-8)}{8}$
+\\$T_1(m)= \frac{(n-2)(7n-8)}{8}+(m-(n-1))(n-2)$.
+Therefore, except first operation of each cycle (search n-2), the SwapLinkedList takes strictly less steps than MoveToFrontLinkedList. Their difference is:
+\\$T_1(m)-T_2(m)\geq \frac{(n-2)(7n-8)}{8}+(m-(n-1))(n-2)-\frac{(n-2)n}{2}(\frac{m}{n-1}+1)=
+\frac{(n-2)(4m(n-2)-5(n-1)n)}{8(n-1)}$. Since $n$ is fixed, we can treat $\frac{(n-2)}{8(n-1)}$ and $-5(n-1)n$ and $n-2$ as constant. Since $m$ can be arbitrary large, $\frac{(n-2)(4m(n-2)-5(n-1)n)}{8(n-1)}$ can be arbitrary large. So $T_1(m)-T_2(m)$ is not bounded from up by constant
+\\n is odd case:
+\\Running time analysis for SwapLinkedList:
+\\Search $n-2$. The SwapLinkedList (S list) takes $n-2$ steps and the S list becomes $[0,1,...,n-4,n-2,n-3,n-1]$.
+\\Search $n-4$. The S list takes $n-4$ steps and becomes $[0,1,...,n-6,n-4,n-5,n-2,n-3,n-1]$.
+\\Search of $n-2i$,where $1\leq i \leq \frac{n-1}{2}$ The S list takes $n-2i$ steps.
+\\At the final search of first half cycle, the S list takes 1 step, and becomes $[1,0,3,2,...,n-2,n-3,1]$. The first half takes $n-2+n-4+...+3+1=\frac{(n-1)^2}{4}$ steps.
+\\For the second half, the S list takes $(n-2)+(n-4)+...+3+1=\frac{(n-1)^2}{4}$. The S list becomes $[0,1,...,n-1]$ again.
+\\ Each complete cycle calls $\_\_contains\_\_$ n-1 times. $T_2(m)\leq \lceil\frac{m}{n-1}\rceil\frac{(n-2)n}{2}$,
+\\Running time analysis for MoveToFrontLinkedList:
+\\Search $n-2$. The MoveToFrontLinkedList (M list) takes $n-2$ steps and the M list becomes $[n-2,0,...,n-4,n-3,n-1]$.
+\\Search $n-4$. The S list takes $n-3$ steps and becomes $[n-4, n-2,0,...,n-6, n-5,n-3,n-1]$.
+\\Search of $n-2i$,where $1\neq i \neq \frac{n-1}{2}$ The M list takes $n-i-1$.
+\\At the final search of first half cycle, the M list takes $\frac{n-1}{2}$ step, and becomes $[1,3,...,n-2,0,2,...,n-1]$. The first half takes $n-2+n-3+...+(\frac{n-1}{2})=\frac{(n-1)(3n-5)}{8}$ steps.
+\\The first number in second half cycle takes n-2 steps for the M list. It is shifted to leftmost. Clearly, all the numbers in second half cycle takes n-2 steps. In total, the second half takes $(n-2)\cdot (\frac{n-1}{2})=\frac{(n-2)(n-1)}{2}$. After complete cycle, this becomes [0,2,...,n-3,1,3,...,n-2,n-1].This new M list has a property that, in every new complete cycle, each element takes $n-2$ steps to search
+\\The first cycle:$\frac{(n-1)(3n-5)}{8}+\frac{(n-2)(n-1)}{2}=\frac{(n-1)(7n-8)}{8}$.
+\\$T_1(m)= \frac{(n-2)(7n-8)}{8}+(m-(n-1))(n-2)$.
+Therefore, except first operation of each cycle (search n-2), the SwapLinkedList takes strictly less steps than MoveToFrontLinkedList. Their difference is:
+\\$T_1(m)-T_2(m)\geq \frac{(n-2)(7n-8)}{8}+(m-(n-1))(n-2)-\frac{(n-2)n}{2}(\frac{m}{n-1}+1)=
+\frac{(n-2)(4m(n-2)-5(n-1)n)}{8(n-1)}$. Since $n$ is fixed, we can treat $\frac{(n-2)}{8(n-1)}$ and $-5(n-1)n$ and $n-2$ as constant. Since $m$ can be arbitrary large, $\frac{(n-2)(4m(n-2)-5(n-1)n)}{8(n-1)}$ can be arbitrary large. So $T_1(m)-T_2(m)$ is not bounded from up by constant
+
+
+\end{enumerate}
+
+\section*{Part 2: Linked List Visualization}
+Complete this part in the provided \texttt{a1\_part2.py} starter file.
+Do \textbf{not} include your solution in this file.
+
+\end{document}

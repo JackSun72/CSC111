@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\pagestyle{empty}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0in}
+\usepackage{comment}
+
+
+\def\nats{{\mathbb N}}
+\def\ints{{\mathbb Z}}
+\includecomment{solution}
+\excludecomment{question}
+\setlength{\parskip}{1ex}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\And}{\mbox{ AND }}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\Or}{\mbox{ OR }}
+\newcommand{\Not}{\mbox{NOT }}
+
+\begin{document}
+
+{\bf \large Quiz 4}
+
+\begin{question}
+The Fibonacci sequence
+$$0,1,1,2,3,5,8,12,21, \ldots$$
+starts with the numbers 0 and 1 and each successive element is the sum of the two previous elements.
+This sequence can be written as
+$$F(0), F(1), F(2), \ldots$$
+where
+$F:\nats \rightarrow \nats$ is defined
+as follows:\\
+$F(0) = 0$,\\
+$F(1) = 1$, and\\
+for all $n \geq 2$, $F(n) = F(n-1) + F(n-2)$.
+
+
+Prove by induction that,  for all nonnegative integers $n$, 
+$$F(n)  = \frac{a^n -b^n}{\sqrt{5}}$$
+where $a = (1+\sqrt{5})/2$ and $b = (1-\sqrt{5})/2$ are the roots of the equation $x^2 - x -1 =0$.
+\end{question}
+
+
+\begin{solution}
+{\bf Solution}:\\
+
+\end{solution}
+\end{document}
